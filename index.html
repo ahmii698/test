@@ -57,11 +57,9 @@
       transition: background 0.3s ease, color 0.3s ease;
     }
 
-    body.dark .service-card,
     body.dark .counter-card,
     body.dark .testi,
     body.dark .ba-card,
-    body.dark .banner-card,
     body.dark .quote-block,
     body.dark input,
     body.dark select,
@@ -365,32 +363,148 @@
       object-fit: cover;
     }
 
-    /* Banners */
+    /* Flip Card Styles - Banners */
     .banners-section { padding: 60px 0; }
     .banners-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 30px;
     }
-    .banner-card {
-      background: var(--card-bg);
+    .flip-card {
+      background-color: transparent;
+      width: 100%;
+      height: 350px;
+      perspective: 1000px;
+      cursor: pointer;
+    }
+    .flip-card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      transition: transform 0.6s ease;
+      transform-style: preserve-3d;
+      border-radius: 32px;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+    }
+    .flip-card:hover .flip-card-inner {
+      transform: rotateY(180deg);
+    }
+    .flip-card-front, .flip-card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
       border-radius: 32px;
       overflow: hidden;
-      box-shadow: 0 15px 30px rgba(0,0,0,0.1);
-      transition: 0.3s;
+    }
+    .flip-card-front {
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    .flip-card-front::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.2);
+    }
+    .flip-card-back {
+      background: var(--card-bg);
+      transform: rotateY(180deg);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 25px;
       text-align: center;
     }
-    .banner-card:hover { transform: translateY(-8px); }
-    .banner-img {
-      width: 100%;
-      height: 220px;
-      object-fit: cover;
-    }
-    .banner-content { padding: 25px; }
-    .banner-content h3 {
+    .flip-card-back h3 {
       font-size: 1.5rem;
       margin-bottom: 12px;
       color: var(--purple-deep);
+    }
+    body.dark .flip-card-back h3 {
+      color: #ffd966;
+    }
+    .flip-card-back p {
+      font-size: 1rem;
+      line-height: 1.5;
+      color: var(--text-primary);
+    }
+
+    /* Flip Card Styles - Services (Front Icon, Back Text) - ALREADY FLIP */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 35px;
+    }
+    .service-flip {
+      background-color: transparent;
+      width: 100%;
+      height: 320px;
+      perspective: 1000px;
+      cursor: pointer;
+    }
+    .service-flip .flip-card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      transition: transform 0.6s ease;
+      transform-style: preserve-3d;
+      border-radius: 40px;
+      box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+    }
+    .service-flip:hover .flip-card-inner {
+      transform: rotateY(180deg);
+    }
+    .service-flip .flip-card-front {
+      background: var(--card-bg);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      border-bottom: 5px solid var(--yellow-glow);
+      border-radius: 40px;
+    }
+    .service-flip .flip-card-front i {
+      font-size: 3.5rem;
+      color: var(--purple-bright);
+      margin-bottom: 20px;
+    }
+    body.dark .service-flip .flip-card-front i {
+      color: var(--yellow-glow);
+    }
+    .service-flip .flip-card-front h3 {
+      font-size: 1.5rem;
+      color: var(--purple-deep);
+    }
+    body.dark .service-flip .flip-card-front h3 {
+      color: #ffd966;
+    }
+    .service-flip .flip-card-front::before {
+      display: none;
+    }
+    .service-flip .flip-card-back {
+      background: var(--card-bg);
+      transform: rotateY(180deg);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 25px;
+      text-align: center;
+      border-radius: 40px;
+      border-bottom: 5px solid var(--yellow-glow);
+    }
+    .service-flip .flip-card-back p {
+      font-size: 0.95rem;
+      line-height: 1.5;
+      color: var(--text-primary);
     }
 
     /* Before/After */
@@ -458,21 +572,6 @@
       margin: 16px auto 0;
       border-radius: 4px;
     }
-    .services-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 35px;
-    }
-    .service-card {
-      background: var(--card-bg);
-      padding: 38px 28px;
-      border-radius: 40px;
-      text-align: center;
-      border-bottom: 5px solid var(--yellow-glow);
-      transition: 0.3s;
-    }
-    .service-card:hover { transform: translateY(-10px); }
-    .service-icon { font-size: 3.2rem; color: var(--purple-bright); margin-bottom: 20px; }
 
     /* Form */
     .quote-block {
@@ -574,7 +673,7 @@
       border-top: 1px solid #222;
     }
 
-    /* ========== TEAM CARD STYLES - FULL COVER IMAGE, NO FLIP ========== */
+    /* Team Cards */
     .team-wrapper {
       display: flex;
       flex-wrap: wrap;
@@ -596,7 +695,6 @@
       transform: translateY(-10px);
       box-shadow: 0 30px 45px rgba(0,0,0,0.25);
     }
-    /* Background image covering full card */
     .team-card-bg {
       position: absolute;
       top: 0;
@@ -608,7 +706,6 @@
       background-repeat: no-repeat;
       z-index: 1;
     }
-    /* Dark overlay for text readability */
     .team-card-bg::after {
       content: '';
       position: absolute;
@@ -619,7 +716,6 @@
       background: linear-gradient(0deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0.1) 100%);
       border-radius: 28px;
     }
-    /* Content on top of image */
     .team-card-content {
       position: relative;
       z-index: 2;
@@ -648,18 +744,11 @@
       color: #1E1A2F;
       width: fit-content;
     }
-    .team-card-content .bio {
-      font-size: 0.85rem;
-      line-height: 1.5;
-      margin: 12px 0 15px;
-      text-shadow: 0 1px 4px rgba(0,0,0,0.5);
-      max-width: 100%;
-    }
     .social-links {
       display: flex;
       justify-content: center;
       gap: 18px;
-      margin-top: 8px;
+      margin-top: 15px;
     }
     .social-links a {
       color: white;
@@ -673,7 +762,6 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: all 0.2s;
     }
     .social-links a:hover {
       color: var(--yellow-glow);
@@ -682,21 +770,6 @@
     }
 
     /* Responsive */
-    @media (max-width: 800px) {
-      .team-card {
-        width: 280px;
-        height: 400px;
-      }
-      .team-card-content h3 { font-size: 1.5rem; }
-      .team-card-content .bio { font-size: 0.8rem; }
-    }
-    @media (max-width: 480px) {
-      .team-card {
-        width: 100%;
-        max-width: 300px;
-        height: 400px;
-      }
-    }
     @media (max-width: 1024px) {
       .banners-grid, .beforeafter-grid { grid-template-columns: repeat(2, 1fr); }
       .hero-content h1 { font-size: 2.8rem; }
@@ -715,6 +788,14 @@
       .banners-grid, .beforeafter-grid { grid-template-columns: 1fr; }
       .counter-card { width: 100%; max-width: 280px; }
       .quote-block { padding: 30px 20px; }
+      .flip-card { height: 320px; }
+      .service-flip { height: 300px; }
+      .team-card { width: 280px; height: 400px; }
+    }
+    @media (max-width: 480px) {
+      .team-card { width: 100%; max-width: 300px; }
+      .flip-card-back p { font-size: 0.85rem; }
+      .flip-card-back h3 { font-size: 1.3rem; }
     }
   </style>
 </head>
@@ -764,25 +845,100 @@
     </div>
   </div>
 
-  <!-- 3 Banners -->
+  <!-- 3 Banners - FLIP CARDS (Front Image, Back Text) -->
   <div class="banners-section">
     <div class="container">
       <h2 class="section-title" data-aos="fade-up">Why Choose Junk R Us</h2>
       <div class="banners-grid">
-        <div class="banner-card" data-aos="flip-left"><img class="banner-img" src="download.jfif" alt="Junk cleanup"><div class="banner-content"><h3>Fast & Reliable</h3><p>Same-day service across 6 counties.</p></div></div>
-        <div class="banner-card" data-aos="flip-left" data-aos-delay="100"><img class="banner-img" src="03.jpeg" alt="Donation"><div class="banner-content"><h3>Eco-Friendly Disposal</h3><p>We recycle & donate up to 70% items.</p></div></div>
-        <div class="banner-card" data-aos="flip-left" data-aos-delay="200"><img class="banner-img" src="05.jpeg" alt="Spotless"><div class="banner-content"><h3>Spotless Guarantee</h3><p>We leave your property cleaner.</p></div></div>
+        <div class="flip-card" data-aos="flip-left">
+          <div class="flip-card-inner">
+            <div class="flip-card-front" style="background-image: url('download.jfif');"></div>
+            <div class="flip-card-back">
+              <h3>Fast & Reliable</h3>
+              <p>Same-day service across 6 counties. We arrive on time, every time.</p>
+            </div>
+          </div>
+        </div>
+        <div class="flip-card" data-aos="flip-left" data-aos-delay="100">
+          <div class="flip-card-inner">
+            <div class="flip-card-front" style="background-image: url('03.jpeg');"></div>
+            <div class="flip-card-back">
+              <h3>Eco-Friendly Disposal</h3>
+              <p>We recycle & donate up to 70% of items to local charities.</p>
+            </div>
+          </div>
+        </div>
+        <div class="flip-card" data-aos="flip-left" data-aos-delay="200">
+          <div class="flip-card-inner">
+            <div class="flip-card-front" style="background-image: url('05.jpeg');"></div>
+            <div class="flip-card-back">
+              <h3>Spotless Guarantee</h3>
+              <p>We leave your property cleaner than we found it. Promise.</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- Services -->
-  <section id="services"><div class="container"><h2 class="section-title" data-aos="fade-up">Premium Junk Solutions</h2><div class="services-grid">
-    <div class="service-card" data-aos="zoom-in"><div class="service-icon"><i class="fas fa-truck-moving"></i></div><h3>Full Hauling</h3><p>Furniture, appliances, yard waste – we haul it all responsibly.</p></div>
-    <div class="service-card" data-aos="zoom-in" data-aos-delay="80"><div class="service-icon"><i class="fas fa-hand-holding-heart"></i></div><h3>Donation Partner</h3><p>Donating to local churches, schools & shelters.</p></div>
-    <div class="service-card" data-aos="zoom-in" data-aos-delay="160"><div class="service-icon"><i class="fas fa-bolt"></i></div><h3>Same-Day Service</h3><p>Flexible scheduling, prompt arrival.</p></div>
-    <div class="service-card" data-aos="zoom-in" data-aos-delay="240"><div class="service-icon"><i class="fas fa-broom"></i></div><h3>Spotless Cleanup</h3><p>We leave your space cleaner.</p></div>
-  </div></div></section>
+  <!-- Services - FLIP CARDS (Front Icon, Back Text) - ALREADY FLIP WORKING -->
+  <section id="services">
+    <div class="container">
+      <h2 class="section-title" data-aos="fade-up">Premium Junk Solutions</h2>
+      <div class="services-grid">
+        <div class="service-flip" data-aos="zoom-in">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <i class="fas fa-truck-moving"></i>
+            
+            </div>
+            <div class="flip-card-back">
+                <h3>Full Hauling</h3>
+              <p>Furniture, appliances, yard waste – we haul it all responsibly.</p>
+            </div>
+          </div>
+        </div>
+        <div class="service-flip" data-aos="zoom-in" data-aos-delay="80">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <i class="fas fa-hand-holding-heart"></i>
+              
+            </div>
+            <div class="flip-card-back">
+              <h3>Donation Partner</h3>
+              <p>Donating to local churches, schools & shelters. Your usable items go to those in need.</p>
+            </div>
+          </div>
+        </div>
+        <div class="service-flip" data-aos="zoom-in" data-aos-delay="160">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <i class="fas fa-bolt"></i>
+             
+            </div>
+              
+            <div class="flip-card-back">
+               <h3>Same-Day Service</h3>
+              <p>Flexible scheduling, prompt arrival. Call before noon for same-day pickup.</p>
+            </div>
+          </div>
+        </div>
+        <div class="service-flip" data-aos="zoom-in" data-aos-delay="240">
+          <div class="flip-card-inner">
+            <div class="flip-card-front">
+              <i class="fas fa-broom"></i>
+              
+            </div>
+            
+            <div class="flip-card-back">
+              <h3>Spotless Cleanup</h3>
+              <p>We leave your space cleaner than before. Swept and spotless guarantee.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <!-- Before/After -->
   <section id="gallery" class="gallery-cards-section">
@@ -804,38 +960,34 @@
     <div class="counter-card" data-aos="flip-left" data-aos-delay="300"><div class="counter-number" id="counterDonations">0</div><div>Donations Made</div></div>
   </div></div></section>
 
-  <!-- TEAM SECTION - STATIC CARDS WITH FULL COVER IMAGE (NO FLIP) -->
+  <!-- TEAM SECTION -->
   <section id="team">
     <div class="container">
       <h2 class="section-title" data-aos="fade-up">Meet Our Core Team</h2>
       <div class="team-wrapper">
-        <!-- Tommy Zollinger Card -->
         <div class="team-card" data-aos="zoom-in">
           <div class="team-card-bg" style="background-image: url('t1.webp');"></div>
           <div class="team-card-content">
-            <h3>Justin pritchett</h3>
+            <h3>Justin Pritchett</h3>
             <div class="role">Co-Founder</div>
-         
             <div class="social-links">
               <a href="#"><i class="fab fa-linkedin-in"></i></a>
               <a href="#"><i class="fab fa-twitter"></i></a>
               <a href="#"><i class="fab fa-instagram"></i></a>
-              <a href="mailto:tommy@junkrustn.com"><i class="fas fa-envelope"></i></a>
+              <a href="mailto:justin@junkrustn.com"><i class="fas fa-envelope"></i></a>
             </div>
           </div>
         </div>
-        <!-- Sarah Mitchell Card -->
         <div class="team-card" data-aos="zoom-in" data-aos-delay="100">
           <div class="team-card-bg" style="background-image: url('t2.webp');"></div>
           <div class="team-card-content">
             <h3>Thomas Zollinger</h3>
             <div class="role">Co-Founder</div>
-           
             <div class="social-links">
               <a href="#"><i class="fab fa-linkedin-in"></i></a>
               <a href="#"><i class="fab fa-instagram"></i></a>
               <a href="#"><i class="fab fa-facebook-f"></i></a>
-              <a href="mailto:sarah@junkrustn.com"><i class="fas fa-envelope"></i></a>
+              <a href="mailto:thomas@junkrustn.com"><i class="fas fa-envelope"></i></a>
             </div>
           </div>
         </div>
